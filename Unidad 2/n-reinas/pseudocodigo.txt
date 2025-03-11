@@ -1,0 +1,66 @@
+INICIO
+
+Definir clase TabuSearchNQueens con parámetros:
+    n (número de reinas y tamaño del tablero)
+    max_iterations (máximo de iteraciones permitidas)
+    tabu_tenure (tamaño de la lista tabú)
+
+Método generate_initial_solution():
+    Crear una lista con n elementos, cada uno con un valor aleatorio entre 0 y n-1
+    Retornar la lista como el estado inicial del tablero
+
+Método calculate_conflicts(tablero):
+    Inicializar conflictos en 0
+    Para cada columna reina_col en el tablero:
+        Para cada columna siguiente other_queen_col:
+            Si las reinas están en la misma fila o en la misma diagonal:
+                Incrementar conflictos
+    Retornar el número total de conflictos
+
+Método get_neighbors(tablero):
+    Inicializar lista de vecinos vacía
+    Para cada columna queen_col en el tablero:
+        Para cada posible fila new_row:
+            Si la reina en queen_col no está en new_row:
+                Crear una copia del tablero
+                Mover la reina de queen_col a new_row
+                Calcular conflictos del nuevo tablero
+                Agregar (nuevo_tablero, número_conflictos) a la lista de vecinos
+    Ordenar vecinos por menor cantidad de conflictos
+    Retornar la lista ordenada de vecinos
+
+Método print_board(tablero):
+    Para cada fila en el tablero:
+        Crear una fila de n puntos "."
+        Reemplazar la posición de la reina con "Q"
+        Imprimir la fila
+
+Método solve():
+    Generar una solución inicial aleatoria
+    Calcular conflictos en el estado inicial
+    Imprimir el tablero inicial
+
+    Para cada iteración en max_iterations:
+        Si el número de conflictos es 0:
+            Imprimir solución encontrada y el tablero final
+            Retornar el tablero como solución
+
+        Obtener los vecinos ordenados por menor cantidad de conflictos
+
+        Para cada vecino en la lista de vecinos:
+            Si el vecino no está en la lista tabú:
+                Agregar vecino a la lista tabú
+                Asignar el vecino como el nuevo estado actual
+                Asignar su número de conflictos
+                Imprimir número de iteración y tablero actual
+                Salir del bucle interno
+
+    Si no se encuentra solución tras max_iterations:
+        Imprimir "No se encontró solución"
+        Retornar None
+
+Ejecutar el algoritmo:
+    Crear instancia de TabuSearchNQueens con n=8, max_iterations=1000, tabu_tenure=10
+    Llamar al método solve() para encontrar una solución
+
+FIN
