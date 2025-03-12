@@ -8,11 +8,14 @@ class TabuSearchNQueens:
         self.tabu_tenure = tabu_tenure  # Tiempo de permanencia en la lista tabú
         self.tabu_list = deque(maxlen=tabu_tenure)  # Lista tabú con memoria limitada
     
-    def generate_initial_solution(self):
+    def generate_initial_solution(self, entrada):
         """
         Genera una solución inicial aleatoria colocando las reinas en distintas filas.
         """
-        return [random.randint(0, self.n - 1) for _ in range(self.n)]
+        if entrada == 1:
+            return [int(input(f"Ingresa la columna de la reina en la fila {row + 1}: ")) for row in range(self.n)]
+        else:
+            return [random.randint(0, self.n - 1) for _ in range(self.n)]
     
     def calculate_conflicts(self, board):
         """
@@ -37,6 +40,8 @@ class TabuSearchNQueens:
                     new_board = list(board)
                     new_board[queen_col] = new_row
                     neighbors.append((new_board, self.calculate_conflicts(new_board)))
+        for neighbor in neighbors:
+            print("Vecino generado:" + str(neighbor[0]) + " - Conflictos: " + str(neighbor[1]))
         return sorted(neighbors, key=lambda x: x[1])  # Ordena por menor cantidad de conflictos
     
     def print_board(self, board):
@@ -49,11 +54,11 @@ class TabuSearchNQueens:
             print(" ".join(line))
         print("\n")
     
-    def solve(self):
+    def solve(self, entrada = 2):
         """
         Resuelve el problema de las N-Reinas utilizando búsqueda tabú.
         """
-        current_board = self.generate_initial_solution()
+        current_board = self.generate_initial_solution(entrada)
         current_conflicts = self.calculate_conflicts(current_board)
         print("Tablero inicial:")
         self.print_board(current_board)
@@ -80,13 +85,14 @@ class TabuSearchNQueens:
 
 
 ## funcion main
-
-
 print("Ingresa el tamaño del tablero (n x n):")
 n = int(input())
 print("Ingresa el número máximo de iteraciones:")
 max_iterations = int(input())
 print("Ingresa el tiempo de permanencia en la lista tabú:")
 tabu_tenure = int(input())
+print("\n")
+print("Seleccione tipo de entrada de datos: \n 1. Manual \n 2. Aleatorio")
+opcion = int(input())
 tabu_search = TabuSearchNQueens(n, max_iterations, tabu_tenure)
-solution = tabu_search.solve()
+solution = tabu_search.solve(opcion)
