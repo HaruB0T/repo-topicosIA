@@ -18,6 +18,7 @@ class TabuSearchNQueens:
         """
         Calcula el número de conflictos en un estado del tablero.
         """
+        
         conflicts = 0
         for queen_col in range(self.n):
             for other_queen_col in range(queen_col + 1, self.n):
@@ -77,6 +78,15 @@ class TabuSearchNQueens:
         print("No se encontró solución en las iteraciones máximas")
         return None  # No se encontró solución en las iteraciones máximas
 
-# Ejecución del algoritmo
-tabu_search = TabuSearchNQueens(n=8, max_iterations=1000, tabu_tenure=10)
+
+## funcion main
+
+
+print("Ingresa el tamaño del tablero (n x n):")
+n = int(input())
+print("Ingresa el número máximo de iteraciones:")
+max_iterations = int(input())
+print("Ingresa el tiempo de permanencia en la lista tabú:")
+tabu_tenure = int(input())
+tabu_search = TabuSearchNQueens(n, max_iterations, tabu_tenure)
 solution = tabu_search.solve()
