@@ -21,7 +21,6 @@ class TabuSearchNQueens:
         """
         Calcula el número de conflictos en un estado del tablero.
         """
-        
         conflicts = 0
         for queen_col in range(self.n):
             for other_queen_col in range(queen_col + 1, self.n):
